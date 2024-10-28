@@ -1,0 +1,25 @@
+.background {
+  fill: none;
+  pointer-events: all;
+}
+
+#states {
+  fill: none;
+  stroke: #fff;
+  stroke-linejoin: round;
+  stroke-width: 1.5px;
+}
+
+.active {
+  display: none;
+}
+
+.county-boundary {
+  stroke: #fff;
+  stroke-width: 0.5px;
+}
+
+.county-boundary:hover,
+.state:hover {
+  fill: #002b5b;
+}

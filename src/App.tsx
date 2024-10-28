@@ -1,10 +1,11 @@
 import "./App.css";
-import Map from "./Map";
+import Jaragua from "./Jaragua";
 
 function App() {
   return (
     <div className="container">
-      <Map />
+      {/* <Map /> */}
+      <Jaragua />
     </div>
   );
 }
