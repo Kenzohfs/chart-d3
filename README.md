@@ -1,50 +1,26 @@
-# React + TypeScript + Vite
+## How was this made?
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Baixar GeoJSON
+GeoJSON é um padrão de estrutura de JSON que é entendível para mapas, imagine como uma forma de entender o mapa em formato de texto.
 
-Currently, two official plugins are available:
+Para consguir o GeoJSON de qualquer lugar do mundo (se disponível no site), acesse overpass.turbo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[overpass.turbo](http://overpass-turbo.eu/)
 
-## Expanding the ESLint configuration
+Exemplo de Jaraguá do Sul
+![Overpass turbo JGS](./src/assets/docs/overpass-turbo.png)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+```json
+[out:json][timeout:25];
+// Define a área de busca para Jaraguá do Sul pelo ID do local
+area["name"="Jaraguá do Sul"]->.searchArea;
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+// Busca todas as relações com boundary=administrative e admin_level=10 (bairros) dentro da área definida
+relation["boundary"="administrative"]["admin_level"="10"](area.searchArea);
+out body;
+>;
+out skel qt;
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Convertendo GeoJSON para TopoJSON
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```

@@ -1,3 +1,7 @@
+.viz {
+  transform: scaleX(-1) rotate(270deg);
+}
+
 .background {
   fill: none;
   pointer-events: all;

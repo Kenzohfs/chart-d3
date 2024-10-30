@@ -2,7 +2,8 @@ import * as d3 from "d3";
 import { useEffect, useRef } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import jgs from "../assets/jaragua-do-sul-bairros-atualizado_multi.json";
+// import jgs from "../assets/jaragua-do-sul-bairros-mapshaper.geojson";
+import jgs from "../assets/jgs-inverted.json";
 import "./styles.css";
 
 const mapRatio = 0.5;
@@ -10,13 +11,19 @@ const margin = { top: 10, bottom: 10, left: 10, right: 10 };
 const colorScale = ["#B9EDDD", "#87CBB9", "#569DAA", "#577D86"];
 
 // Important: overpass turbo was used to create jaragua do sul
+// How was this made?
 
 const Jaragua = () => {
   const vizRef = useRef<HTMLDivElement | null>(null);
   const colorGenerator = () =>
-    colorScale[Math.floor(Math.random() * colorScale.length)];
+    // colorScale[Math.floor(Math.random() * colorScale.length)];
+    "#B9EDDD";
 
   useEffect(() => {
+    // jgs.features.forEach((x, i) =>
+    //   console.log(x.properties.name + " " + d3.geoBounds(x))
+    // );
+
     const updateDimensions = () => {
       if (!vizRef.current) return;
       const viz = vizRef.current;
@@ -43,6 +50,12 @@ const Jaragua = () => {
         type: "FeatureCollection",
         features: jgs.features,
       });
+
+      // const projection = d3
+      //   .geoMercator()
+      //   .scale(1000) // ajuste o valor conforme necessário
+      //   .center([-49.0667, -26.4855]) // centro do mapa, ex: [-49.0667, -26.4855] para Jaraguá do Sul
+      //   .translate([width / 2, height / 2]);
 
       const pathGenerator = d3.geoPath().projection(projection);
 
