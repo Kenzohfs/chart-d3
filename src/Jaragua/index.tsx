@@ -1,17 +1,15 @@
 import * as d3 from "d3";
 import { useEffect, useRef } from "react";
 import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-// import jgs from "../assets/jaragua-do-sul-bairros-mapshaper.geojson";
+
 import jgs from "../assets/jgs-inverted.json";
+
+import "react-toastify/dist/ReactToastify.css";
 import "./styles.css";
 
 const mapRatio = 0.5;
 const margin = { top: 10, bottom: 10, left: 10, right: 10 };
 const colorScale = ["#B9EDDD", "#87CBB9", "#569DAA", "#577D86"];
-
-// Important: overpass turbo was used to create jaragua do sul
-// How was this made?
 
 const Jaragua = () => {
   const vizRef = useRef<HTMLDivElement | null>(null);
@@ -20,6 +18,7 @@ const Jaragua = () => {
     "#B9EDDD";
 
   useEffect(() => {
+    // [90, 180, -90, -180] - Se aparacer algo assim, quer dizer q o GeJSON precisa ser modificado apagando os Points que aparecem no final do arquivo.
     // jgs.features.forEach((x, i) =>
     //   console.log(x.properties.name + " " + d3.geoBounds(x))
     // );
@@ -28,7 +27,6 @@ const Jaragua = () => {
       if (!vizRef.current) return;
       const viz = vizRef.current;
 
-      // Remove existing svg if any
       d3.select(viz).selectAll("*").remove();
 
       let width = parseInt(d3.select(viz).style("width"));
@@ -38,7 +36,6 @@ const Jaragua = () => {
       const svg = d3
         .select(viz)
         .append("svg")
-        .attr("class", "center-container")
         .attr("height", height + margin.top + margin.bottom)
         .attr("width", width + margin.left + margin.right);
 
@@ -48,7 +45,7 @@ const Jaragua = () => {
       //   .scale(width);
       const projection = d3.geoMercator().fitSize([width, height], {
         type: "FeatureCollection",
-        features: jgs.features,
+        features: jgs.features as any,
       });
 
       // const projection = d3
@@ -71,7 +68,7 @@ const Jaragua = () => {
         .enter()
         .append("path")
         .attr("key", (feature: any) => feature.properties.name ?? "not found")
-        .attr("d", pathGenerator)
+        .attr("d", pathGenerator as any)
         .attr("class", "state")
         .attr("fill", colorGenerator);
     };
