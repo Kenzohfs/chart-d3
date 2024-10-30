@@ -1,5 +1,5 @@
 .viz {
-  transform: scaleX(-1) rotate(270deg);
+  transform: scaleX(-1) rotate(270deg) ;
 }
 
 .background {
@@ -12,6 +12,7 @@
   stroke: #fff;
   stroke-linejoin: round;
   stroke-width: 1.5px;
+  /* transform: scaleX(1.5); Scale the map to it extends vertically */
 }
 
 .active {

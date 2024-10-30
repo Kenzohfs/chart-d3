@@ -114,3 +114,7 @@ O exemplo de utilização se encontra em `src/Jaragua/index.tsx`.
 Dependências:
 - `npm i d3`
 - `npm i @types/d3`
+
+Referências:
+- https://observablehq.com/@matijapiskorec/drawing-maps-from-openstreetmap-with-d3o
+- https://github.com/d3/d3-geo/issues/118

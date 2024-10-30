@@ -9,13 +9,10 @@ import "./styles.css";
 
 const mapRatio = 0.5;
 const margin = { top: 10, bottom: 10, left: 10, right: 10 };
-const colorScale = ["#B9EDDD", "#87CBB9", "#569DAA", "#577D86"];
 
 const Jaragua = () => {
   const vizRef = useRef<HTMLDivElement | null>(null);
-  const colorGenerator = () =>
-    // colorScale[Math.floor(Math.random() * colorScale.length)];
-    "#B9EDDD";
+  const colorGenerator = () => "#B9EDDD";
 
   useEffect(() => {
     // [90, 180, -90, -180] - Se aparacer algo assim, quer dizer q o GeJSON precisa ser modificado apagando os Points que aparecem no final do arquivo.
@@ -36,29 +33,31 @@ const Jaragua = () => {
       const svg = d3
         .select(viz)
         .append("svg")
+        .attr("class", "svg")
         .attr("height", height + margin.top + margin.bottom)
         .attr("width", width + margin.left + margin.right);
 
-      // const projection = d3
-      //   .geoMercator()
-      //   .translate([width / 2, height / 2])
-      //   .scale(width);
-      const projection = d3.geoMercator().fitSize([width, height], {
-        type: "FeatureCollection",
-        features: jgs.features as any,
-      });
+      // As duas opções abaixo são equivalentes
+      const projection = d3.geoMercator().fitExtent(
+        [
+          [0, 0],
+          [
+            width - margin.left - margin.right,
+            height - margin.top - margin.bottom,
+          ],
+        ],
+        jgs as any
+      );
 
-      // const projection = d3
-      //   .geoMercator()
-      //   .scale(1000) // ajuste o valor conforme necessário
-      //   .center([-49.0667, -26.4855]) // centro do mapa, ex: [-49.0667, -26.4855] para Jaraguá do Sul
-      //   .translate([width / 2, height / 2]);
+      // const projection = d3.geoMercator().fitSize([width, height], {
+      //   type: "FeatureCollection",
+      //   features: jgs.features as any,
+      // });
 
-      const pathGenerator = d3.geoPath().projection(projection);
+      const pathGenerator = d3.geoPath(projection);
 
       const g = svg
         .append("g")
-        .attr("class", "center-container center-items us-state")
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
       g.append("g")
