@@ -1,3 +1,5 @@
+[Gráfico de Mapa Funcional](./public/jaragua-do-sul-map-chart)
+
 ## Como foi feito?
 
 ### Baixar GeoJSON
