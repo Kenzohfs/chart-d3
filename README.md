@@ -1,4 +1,4 @@
-[Gráfico de Mapa Funcional](./public/jaragua-do-sul-map-chart)
+[Gráfico de Mapa Funcional](./public/jaraguajaragua-do-sul-map-chart.gif)
 
 ## Como foi feito?
 
